@@ -28,8 +28,13 @@ namespace Sparcpoint.Documentation.Sql
                         IsAscending = isAscending,
                         Column = table.GetColumn(columnName)
                     };
-                }).ToArray()
+                }).ToArray(),
             };
+
+            if (statement.IncludeColumns?.Any() ?? false)
+            {
+                index.IncludeColumns = new ColumnList(statement.IncludeColumns.Select(c => table.GetColumn(generator.Generate(c))));
+            }
 
             if (isUnique)
                 table.UniqueIndices.Add(index);

@@ -1,5 +1,4 @@
 ﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
-using Sparcpoint.Documentation.Abstractions;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -41,23 +40,6 @@ namespace Sparcpoint.Documentation.Sql
         {
             Type inputType = statement.GetType();
             return typeof(ISqlServerStatementHandler<>).MakeGenericType(inputType);
-        }
-    }
-
-    public sealed class SqlServerFileWriter : IFileStructureWriter
-    {
-        private readonly IFileWriter _Writer;
-        private readonly string _RootDirectory;
-
-        public SqlServerFileWriter(IFileWriter writer, string rootDirectory)
-        {
-            _Writer = writer ?? throw new ArgumentNullException(nameof(writer));
-            _RootDirectory = rootDirectory ?? throw new ArgumentNullException(nameof(rootDirectory));
-        }
-
-        public Task Write<T>(string name, byte[] content)
-        {
-            throw new NotImplementedException();
         }
     }
 }

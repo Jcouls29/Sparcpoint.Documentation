@@ -4,12 +4,12 @@ namespace Sparcpoint.Documentation.Sql
 {
     public class TableColumnModel
     {
-        public TableColumnModel(TableModel table)
+        public TableColumnModel(ISqlModel table)
         {
-            Table = table ?? throw new ArgumentNullException(nameof(table));
+            ParentReference = table ?? throw new ArgumentNullException(nameof(table));
         }
 
-        public TableModel Table { get; }
+        public ISqlModel ParentReference { get; }
 
         public string Name { get; set; }
         public string DataType { get; set; }

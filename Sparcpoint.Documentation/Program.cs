@@ -47,6 +47,15 @@ static IServiceProvider BuildDependencyRoot(string templateDirectory)
                 .AsImplementedInterfaces();
     });
 
+    services.AddSingleton<ISqlServerConstraintHandler, DefaultSqlServerConstraintHandler>();
+    services.Scan(_ =>
+    {
+        _.FromAssemblyOf<ISqlServerConstraintHandler>()
+            .AddClasses(classes => classes
+                .AssignableTo(typeof(ISqlServerConstraintHandler<>)))
+                .AsImplementedInterfaces();
+    });
+
     services.AddSingleton<ITemplateLoader>(sp => new FileNameMatchTemplateLoader(
         sp.GetRequiredService<IFileStructureLoaderFactory<Template>>(), 
         templateDirectory));
@@ -61,6 +70,7 @@ static async Task BuildSql(string template, bool noIndexPage, bool verbose, stri
         typeof(CreateSchemaStatement),
         typeof(CreateTableStatement),
         typeof(CreateIndexStatement),
+        typeof(CreateTypeTableStatement),
     });
 
     IServiceProvider provider = BuildDependencyRoot(template);
@@ -99,8 +109,13 @@ static async Task BuildSql(string template, bool noIndexPage, bool verbose, stri
     foreach(var statement in sortedStatements)
         await handler.HandleAsync(statement, tree, generator);
 
-    //foreach(var constraint in tree.GetDeferredConstraints())
-    //    await handler.HandleAsync(constraint, tree, generator);
+    var constraintHandler = provider.GetRequiredService<ISqlServerConstraintHandler>();
+    foreach (var constraint in tree.GetDeferredConstraints())
+        if (constraintHandler.CanHandle(constraint))
+            constraintHandler.Handle(constraint, tree, generator);
+
+    // NOTE: Tree is built at this point
+
 }
 
 static SqlScriptGenerator CreateSqlGenerator()

@@ -60,5 +60,30 @@ namespace Sparcpoint.Documentation.Sql
 
             return new SqlIdentifier(name.BaseIdentifier.Value, name.SchemaIdentifier?.Value);
         }
+
+        public static TableColumnModel[] GetColumns(this TableDefinition definition, ISqlModel parentReference, SqlScriptGenerator generator)
+        {
+            if (definition == null)
+                throw new ArgumentNullException(nameof(definition));
+
+            if (parentReference == null)
+                throw new ArgumentNullException(nameof(parentReference));
+
+            if (generator == null)
+                throw new ArgumentNullException(nameof(generator));
+
+            return definition.ColumnDefinitions.Select(def =>
+            {
+                return new TableColumnModel(parentReference)
+                {
+                    Name = generator.Generate(def.ColumnIdentifier),
+                    DataType = generator.Generate(def.DataType),
+                    IsNullable = def.IsNullable(),
+                    IsPrimaryKey = def.IsPrimaryKey(),
+                    Identity = def.GetIdentity(),
+                    DefaultValue = generator.Generate(def.DefaultConstraint?.Expression)
+                };
+            }).ToArray();
+        }
     }
 }

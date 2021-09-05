@@ -1,5 +1,4 @@
 ﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,13 +16,12 @@ namespace Sparcpoint.Documentation.Sql
 
             var table = new TableModel(schema)
             {
-                Identifier = statement.SchemaObjectName.ToSqlIdentifier(),
+                Identifier = identifier,
                 Description = string.Empty,
                 Fragment = statement
             };
 
-            var columns = GetColumns(table, statement.Definition.ColumnDefinitions, generator);
-            table.Columns = columns;
+            table.Columns = statement.Definition.GetColumns(table, generator);
 
             // TODO: Table Indexes
 
@@ -32,28 +30,12 @@ namespace Sparcpoint.Documentation.Sql
             {
                 foreach(var constraint in statement.Definition.TableConstraints)
                 {
-                    tree.DeferConstraint(constraint);
+                    tree.DeferConstraint(table, constraint);
                 }
             }
 
             tree.Add(table);
             schema.Tables.Add(table);
-        }
-
-        private TableColumnModel[] GetColumns(TableModel table, IList<ColumnDefinition> definitions, SqlScriptGenerator generator)
-        {
-            return definitions.Select(def =>
-            {
-                return new TableColumnModel(table)
-                {
-                    Name = generator.Generate(def.ColumnIdentifier),
-                    DataType = generator.Generate(def.DataType),
-                    IsNullable = def.IsNullable(),
-                    IsPrimaryKey = def.IsPrimaryKey(),
-                    Identity = def.GetIdentity(),
-                    DefaultValue = generator.Generate(def.DefaultConstraint?.Expression)
-                };
-            }).ToArray();
         }
     }
 }
