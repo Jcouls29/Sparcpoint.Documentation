@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Sparcpoint.Documentation.Sql
@@ -8,6 +9,9 @@ namespace Sparcpoint.Documentation.Sql
         void Add<T>(T model) where T : ISqlModel;
         T Get<T>(SqlIdentifier identifier) where T : ISqlModel;
 
+        void DeferConstraint(ConstraintDefinition definition);
+        IEnumerable<ConstraintDefinition> GetDeferredConstraints();
+
         IReadOnlySqlIndexer<SchemaModel> Schemas { get; }
         IReadOnlySqlIndexer<TableModel> Tables { get; }
     }
@@ -15,11 +19,17 @@ namespace Sparcpoint.Documentation.Sql
     public sealed class InMemorySqlTree : ISqlTree
     {
         private readonly List<ISqlModel> _Models = new List<ISqlModel>();
+        private readonly List<ConstraintDefinition> _DeferredConstraints = new List<ConstraintDefinition>();
 
         public InMemorySqlTree()
         {
             Schemas = new DefaultReadOnlySqlIndexer<SchemaModel>(this);
             Tables = new DefaultReadOnlySqlIndexer<TableModel>(this);
+
+            _Models.Add(new SchemaModel
+            {
+                Identifier = new SqlIdentifier("dbo"),
+            });
         }
 
         public IReadOnlySqlIndexer<SchemaModel> Schemas { get; }
@@ -34,5 +44,10 @@ namespace Sparcpoint.Documentation.Sql
 
         public T Get<T>(SqlIdentifier identifier) where T : ISqlModel
             => (T)_Models.FirstOrDefault(m => m is T && m.Identifier == identifier);
+
+        public void DeferConstraint(ConstraintDefinition definition)
+            => _DeferredConstraints.Add(definition);
+        public IEnumerable<ConstraintDefinition> GetDeferredConstraints()
+            => _DeferredConstraints;
     }
 }
