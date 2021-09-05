@@ -7,7 +7,7 @@ namespace Sparcpoint.Documentation.Sql
 {
     public class CreateSchemaStatementHandler : ISqlServerStatementHandler<CreateSchemaStatement>
     {
-        public async Task HandleAsync(string source, CreateSchemaStatement statement, ISqlTree tree, SqlScriptGenerator generator)
+        public async Task HandleAsync(CreateSchemaStatement statement, ISqlTree tree, SqlScriptGenerator generator)
         {
             tree.Add(new SchemaModel
             {
@@ -15,20 +15,6 @@ namespace Sparcpoint.Documentation.Sql
                 Description = string.Empty,
                 Fragment = statement
             });
-        }
-    }
-
-    public class CreateIndexStatementHandler : ISqlServerStatementHandler<CreateIndexStatement>
-    {
-        public async Task HandleAsync(string source, CreateIndexStatement statement, ISqlTree tree, SqlScriptGenerator generator)
-        {
-            var name = statement.Name;
-            var columns = statement.Columns;
-            var isUnique = statement.Unique;
-
-            TableModel table = tree.Tables[statement.OnName];
-
-
         }
     }
 }
