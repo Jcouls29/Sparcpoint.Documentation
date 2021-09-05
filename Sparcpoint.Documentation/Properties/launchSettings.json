@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Sparcpoint.Documentation": {
+      "commandName": "Project"
+    },
+    "Test": {
+      "commandName": "Project",
+      "commandLineArgs": "build-sql \"C:\\Repos\\SparcPoint\\src\\products\\Sparcpoint.Inventory\\src\\Sparcpoint.Inventory.Database\" \".\\Output\""
+    }
+  }
+}
