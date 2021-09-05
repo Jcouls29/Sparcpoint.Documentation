@@ -21,13 +21,13 @@ namespace Sparcpoint.Documentation.Sql
             return service != null;
         }
 
-        public async Task HandleAsync(string source, TSqlStatement statement, ISqlTree tree, SqlScriptGenerator generator)
+        public async Task HandleAsync(TSqlStatement statement, ISqlTree tree, SqlScriptGenerator generator)
         {
             object service = GetService(statement);
             Type serviceType = service.GetType();
             MethodInfo method = serviceType.GetMethod(nameof(ISqlServerStatementHandler<TSqlStatement>.HandleAsync));
 
-            Task result = (Task)method.Invoke(service, new object[] { source, statement, tree, generator });
+            Task result = (Task)method.Invoke(service, new object[] { statement, tree, generator });
             await result;
         }
 

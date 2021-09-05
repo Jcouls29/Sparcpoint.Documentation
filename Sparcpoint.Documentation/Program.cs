@@ -26,6 +26,8 @@ var rootCommand = new RootCommand
 };
 
 await rootCommand.InvokeAsync(args);
+
+Console.WriteLine("Conversion Complete!");
 Console.ReadKey();
 
 static IServiceProvider BuildDependencyRoot(string templateDirectory)
@@ -54,6 +56,13 @@ static IServiceProvider BuildDependencyRoot(string templateDirectory)
 
 static async Task BuildSql(string template, bool noIndexPage, bool verbose, string path, string output)
 {
+    List<Type> SortedTypes = new List<Type>(new[]
+    {
+        typeof(CreateSchemaStatement),
+        typeof(CreateTableStatement),
+        typeof(CreateIndexStatement),
+    });
+
     IServiceProvider provider = BuildDependencyRoot(template);
     var sqlLoaderFactory = provider.GetRequiredService<IFileStructureLoaderFactory<TSqlStatement>>();
     var handler = provider.GetRequiredService<ISqlServerStatementHandler>();
@@ -67,20 +76,31 @@ static async Task BuildSql(string template, bool noIndexPage, bool verbose, stri
     SqlScriptGenerator generator = CreateSqlGenerator();
     ISqlTree tree = new InMemorySqlTree();
 
+    List<TSqlStatement> statements = new List<TSqlStatement>();
     foreach(var file in files)
     {
         using (var reader  = new StreamReader(file))
         {
             TSqlScript script = (TSqlScript)parser.Parse(reader, out IList<ParseError> errors);
-            
-            foreach(var batch in script.Batches)
-                foreach(var statement in batch.Statements)
-                {
-                    if (handler.CanHandle(statement))
-                        await handler.HandleAsync(file, statement, tree, generator);
-                }
+
+            foreach (var batch in script.Batches)
+                statements.AddRange(batch.Statements);
         }
     }
+
+    var sortedStatements = statements
+        .Where(s => handler.CanHandle(s))
+        .OrderBy(s =>
+        {
+            return SortedTypes.IndexOf(s.GetType());
+        })
+        .ToArray();
+
+    foreach(var statement in sortedStatements)
+        await handler.HandleAsync(statement, tree, generator);
+
+    //foreach(var constraint in tree.GetDeferredConstraints())
+    //    await handler.HandleAsync(constraint, tree, generator);
 }
 
 static SqlScriptGenerator CreateSqlGenerator()
