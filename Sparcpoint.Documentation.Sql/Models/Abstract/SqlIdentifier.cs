@@ -14,7 +14,7 @@ namespace Sparcpoint.Documentation.Sql
         public string? Schema { get; set; }
         public string Name { get; set; }
 
-        public SqlIdentifier GetSchemaIdentifier()
+        public SqlIdentifier ToSchemaIdentifier()
             => new SqlIdentifier(Schema ?? throw new InvalidOperationException("Schema is not defined."));
 
         public bool Equals(SqlIdentifier other)

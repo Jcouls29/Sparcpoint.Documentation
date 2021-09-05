@@ -22,5 +22,8 @@ namespace Sparcpoint.Documentation.Sql
                 Value = prop.GetValue(this)
             }).ToDictionary(kv => kv.Key, kv => kv.Value);
         }
+
+        public override string ToString()
+            => Identifier.ToString();
     }
 }
