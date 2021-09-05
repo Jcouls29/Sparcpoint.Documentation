@@ -14,16 +14,4 @@ namespace Sparcpoint.Documentation.Sql
         bool CanHandle(TSqlStatement statement);
         Task HandleAsync(TSqlStatement statement, ISqlTree tree, SqlScriptGenerator generator);
     }
-
-    public interface ISqlServerConstraintHandler<TConstraint>
-        where TConstraint : ConstraintDefinition
-    {
-        void Handle(TableModel table, TConstraint constraint, ISqlTree tree, SqlScriptGenerator generator);
-    }
-
-    public interface ISqlServerConstraintHandler
-    {
-        bool CanHandle(DeferredTableConstraint constraint);
-        void Handle(DeferredTableConstraint constraint, ISqlTree tree, SqlScriptGenerator generator);
-    }
 }

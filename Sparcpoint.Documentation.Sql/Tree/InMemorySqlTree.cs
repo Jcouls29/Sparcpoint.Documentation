@@ -4,20 +4,6 @@ using System.Linq;
 
 namespace Sparcpoint.Documentation.Sql
 {
-    public interface ISqlTree
-    {
-        void Add<T>(T model) where T : ISqlModel;
-        T Get<T>(SqlIdentifier identifier) where T : ISqlModel;
-        IEnumerable<T> Get<T>() where T : ISqlModel;
-
-        void DeferConstraint(TableModel table, ConstraintDefinition definition);
-        IEnumerable<DeferredTableConstraint> GetDeferredConstraints();
-
-        IReadOnlySqlIndexer<SchemaModel> Schemas { get; }
-        IReadOnlySqlIndexer<TableModel> Tables { get; }
-        IReadOnlySqlIndexer<TableTypeModel> TableTypes { get; }
-    }
-
     public sealed class InMemorySqlTree : ISqlTree
     {
         private readonly List<ISqlModel> _Models = new List<ISqlModel>();
@@ -56,11 +42,5 @@ namespace Sparcpoint.Documentation.Sql
             => _DeferredConstraints.Add(new DeferredTableConstraint { Table = table, Constraint = definition });
         public IEnumerable<DeferredTableConstraint> GetDeferredConstraints()
             => _DeferredConstraints;
-    }
-
-    public sealed class DeferredTableConstraint
-    {
-        public TableModel Table { get; set; }
-        public ConstraintDefinition Constraint { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Sparcpoint.Documentation.Sql
             var table = new TableModel(schema)
             {
                 Identifier = identifier,
-                Description = string.Empty,
+                Description = statement.ScriptTokenStream.GetDescription(statement.FirstTokenIndex),
                 Fragment = statement
             };
 

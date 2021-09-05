@@ -36,6 +36,11 @@ namespace Sparcpoint.Documentation.Sql
                 index.IncludeColumns = new ColumnList(statement.IncludeColumns.Select(c => table.GetColumn(generator.Generate(c))));
             }
 
+            if (statement.FilterPredicate != null)
+            {
+                index.Filter = generator.Generate(statement.FilterPredicate);
+            }
+
             if (isUnique)
                 table.UniqueIndices.Add(index);
             else

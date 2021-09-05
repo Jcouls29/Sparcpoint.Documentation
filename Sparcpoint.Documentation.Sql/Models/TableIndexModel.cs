@@ -7,6 +7,7 @@ namespace Sparcpoint.Documentation.Sql
         public string Name { get; set; }
         public SortedColumnModel[] Columns { get; set; }
         public ColumnList IncludeColumns { get; set; }
+        public string Filter { get; set; }
 
         public TSqlFragment Fragment { get; set; }
 

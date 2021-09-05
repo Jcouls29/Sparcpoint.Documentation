@@ -127,4 +127,3 @@ static SqlScriptGenerator CreateSqlGenerator()
         IncludeSemicolons = true
     });
 }
-

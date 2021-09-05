@@ -1,5 +1,6 @@
 ﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Sparcpoint.Documentation.Sql
@@ -77,6 +78,7 @@ namespace Sparcpoint.Documentation.Sql
                 return new TableColumnModel(parentReference)
                 {
                     Name = generator.Generate(def.ColumnIdentifier),
+                    Description = def.ScriptTokenStream.GetDescription(def.FirstTokenIndex),
                     DataType = generator.Generate(def.DataType),
                     IsNullable = def.IsNullable(),
                     IsPrimaryKey = def.IsPrimaryKey(),
@@ -84,6 +86,76 @@ namespace Sparcpoint.Documentation.Sql
                     DefaultValue = generator.Generate(def.DefaultConstraint?.Expression)
                 };
             }).ToArray();
+        }
+
+        public static string GetDescription(this IList<TSqlParserToken> tokens, int statementStart)
+        {
+            const string OPEN_TAG = "@Description";
+            const string CLOSE_TAG = "@EndDescription";
+
+            if (statementStart <= 0)
+                return string.Empty;
+
+            string comment = string.Empty;
+            for(int i = statementStart - 1; i > 0; i--)
+            {
+                if (tokens[i].TokenType == TSqlTokenType.WhiteSpace)
+                    continue;
+
+                if (tokens[i].TokenType == TSqlTokenType.MultilineComment)
+                    comment = tokens[i].GetMultilineComment() + '\n' + comment;
+                else if (tokens[i].TokenType == TSqlTokenType.SingleLineComment)
+                    comment = tokens[i].GetSingleLineComment() + '\n' + comment;
+                else
+                    break;
+            }
+
+            if (string.IsNullOrWhiteSpace(comment))
+                return string.Empty;
+
+            // Let's focus on finding the @Description token
+            comment = comment.Trim();
+
+            int openTag = comment.IndexOf(OPEN_TAG, StringComparison.OrdinalIgnoreCase);
+            if (openTag == -1)
+                return string.Empty;
+
+            int firstReturn = comment.IndexOf("\n", openTag);
+            int closeTag = comment.IndexOf(CLOSE_TAG, StringComparison.OrdinalIgnoreCase);
+
+            int startIndex = openTag + OPEN_TAG.Length;
+            string description = string.Empty;
+            if (closeTag == -1)
+            {
+                // We will pull out a single line description
+                if (firstReturn > -1)
+                     description = comment.Substring(startIndex, firstReturn - startIndex);
+                else
+                    description = comment.Substring(startIndex);
+            } else
+            {
+                description = comment.Substring(startIndex, closeTag - startIndex);
+            }
+
+            description = description.Trim();
+
+            return description;
+        }
+
+        public static string GetMultilineComment(this TSqlParserToken token)
+        {
+            if (token.TokenType != TSqlTokenType.MultilineComment)
+                throw new ArgumentException("Not a multiline comment.");
+
+            return token.Text.Trim('/', '*', ' ');
+        }
+
+        public static string GetSingleLineComment(this TSqlParserToken token)
+        {
+            if (token.TokenType != TSqlTokenType.SingleLineComment)
+                throw new ArgumentException("Not a single line comment.");
+
+            return token.Text.TrimStart('-', ' ').Trim();
         }
     }
 }
