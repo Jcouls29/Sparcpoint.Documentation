@@ -18,14 +18,12 @@ namespace Sparcpoint.Documentation.Sql
             {
                 Identifier = identifier,
                 Description = statement.ScriptTokenStream.GetDescription(statement.FirstTokenIndex),
-                Fragment = statement
+                Fragment = statement,
+                CreateStatement = generator.Generate(statement),
             };
 
             table.Columns = statement.Definition.GetColumns(table, generator);
 
-            // TODO: Table Indexes
-
-            // TODO: Table Constraints
             if (statement.Definition.TableConstraints?.Any() ?? false)
             {
                 foreach(var constraint in statement.Definition.TableConstraints)

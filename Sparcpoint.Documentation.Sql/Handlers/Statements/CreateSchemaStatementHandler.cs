@@ -13,7 +13,8 @@ namespace Sparcpoint.Documentation.Sql
             {
                 Identifier = statement?.Name?.ToSqlIdentifier() ?? throw new Exception("Missing Schema Name"),
                 Description = string.Empty,
-                Fragment = statement
+                Fragment = statement,
+                CreateStatement = generator.Generate(statement),
             });
         }
     }

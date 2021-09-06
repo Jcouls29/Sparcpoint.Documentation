@@ -4,6 +4,6 @@ namespace Sparcpoint.Documentation.Abstractions
 {
     public interface IFileWriter
     {
-        Task Write(string path, byte[] content);
+        Task WriteAsync(string path, byte[] content);
     }
 }

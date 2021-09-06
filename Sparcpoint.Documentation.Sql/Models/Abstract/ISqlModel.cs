@@ -9,6 +9,6 @@ namespace Sparcpoint.Documentation.Sql
         string Description { get; }
         TSqlFragment? Fragment { get; }
 
-        Dictionary<string, object> GetProperties();
+        string? CreateStatement { get; }
     }
 }

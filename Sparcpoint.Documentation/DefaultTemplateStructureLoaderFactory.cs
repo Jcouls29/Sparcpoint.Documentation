@@ -9,15 +9,9 @@ public class DefaultTemplateStructureLoaderFactory : IFileStructureLoaderFactory
     public IFileStructureLoader FromPath(string path)
     {
         if (Directory.Exists(path))
-            return new DirectoryFileStructureLoader(path, "*.template");
+            return new DirectoryFileStructureLoader(path, "*.*");
 
         throw new ArgumentException("Invalid path supplied.", nameof(path));
     }
-}
-
-public class TextFileWriter : IFileWriter
-{
-    public Task Write(string path, byte[] content)
-        => File.WriteAllTextAsync(path, Encoding.UTF8.GetString(content));
 }
 

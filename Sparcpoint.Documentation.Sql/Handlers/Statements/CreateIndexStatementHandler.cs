@@ -16,7 +16,7 @@ namespace Sparcpoint.Documentation.Sql
 
             TableIndexModel index = new TableIndexModel
             {
-                Name = statement.Name.Value,
+                Identifier = new SqlIdentifier(statement.Name.Value),
                 Fragment = statement,
                 Columns = statement.Columns.Select(c =>
                 {
@@ -40,6 +40,8 @@ namespace Sparcpoint.Documentation.Sql
             {
                 index.Filter = generator.Generate(statement.FilterPredicate);
             }
+
+            index.CreateStatement = generator.Generate(statement);
 
             if (isUnique)
                 table.UniqueIndices.Add(index);

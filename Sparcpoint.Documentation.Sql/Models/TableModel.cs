@@ -17,8 +17,14 @@ namespace Sparcpoint.Documentation.Sql
         public TableColumnModel[] Columns { get; set; }
 
         public IList<TableIndexModel> UniqueIndices { get; } = new List<TableIndexModel>();
+        public bool HasUniqueIndices => UniqueIndices?.Any() ?? false;
+
         public IList<TableIndexModel> Indices { get; } = new List<TableIndexModel>();
+        public bool HasIndices => Indices?.Any() ?? false;
+
         public IList<ForeignKeyReference> ForeignKeys { get; set; } = new List<ForeignKeyReference>();
+        public bool HasForeignKeys => ForeignKeys?.Any() ?? false;
+
         public PrimaryKeyConstraint? PrimaryKeyConstraint { get; set; }
 
         public TableColumnModel GetColumn(string name)

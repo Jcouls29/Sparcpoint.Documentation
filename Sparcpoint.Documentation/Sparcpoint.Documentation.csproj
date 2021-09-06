@@ -22,7 +22,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Templates\Default\CreateSchemaStatement.template">
+    <None Update="Templates\Default\TableTypeModel.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\Default\TableModel.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\Default\SchemaModel.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

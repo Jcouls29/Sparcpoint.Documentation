@@ -10,6 +10,9 @@ namespace Sparcpoint.Documentation.Sql
         public SqlIdentifier Identifier { get; set; }
         public virtual string Description { get; set; } = string.Empty;
         public virtual TSqlFragment? Fragment { get; set; } = null;
+        public virtual string? CreateStatement { get; set; }
+
+        public bool HasCreateStatement => CreateStatement != null;
 
         public virtual Dictionary<string, object> GetProperties()
         {

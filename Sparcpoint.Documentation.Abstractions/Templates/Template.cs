@@ -6,5 +6,16 @@ namespace Sparcpoint.Documentation.Abstractions
     {
         public string? Value { get; set; }
         public string? Source { get; set; }
+
+        public string FileExtension
+        {
+            get
+            {
+                if (Source != null)
+                    return System.IO.Path.GetExtension(Source) ?? ".txt";
+
+                return ".txt";
+            }
+        }
     }
 }

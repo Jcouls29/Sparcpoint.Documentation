@@ -17,10 +17,11 @@ namespace Sparcpoint.Documentation.Sql
             {
                 Identifier = identifier,
                 Description = string.Empty,
-                Fragment = statement
+                Fragment = statement,
+                CreateStatement = generator.Generate(statement),
             };
 
-            tableType.Columns = statement.Definition.GetColumns(tableType, generator);
+            tableType.Columns = new ColumnList(statement.Definition.GetColumns(tableType, generator));
 
             tree.Add(tableType);
             schema.TableTypes.Add(tableType);

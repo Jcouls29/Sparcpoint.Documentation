@@ -12,7 +12,7 @@ namespace Sparcpoint.Documentation.Sql
 
         public SchemaModel Schema { get; }
 
-        public TableColumnModel[] Columns { get; set; }
+        public ColumnList Columns { get; set; }
 
         public TableColumnModel GetColumn(string name)
         {

@@ -27,14 +27,13 @@ var rootCommand = new RootCommand
 
 await rootCommand.InvokeAsync(args);
 
-Console.WriteLine("Conversion Complete!");
-Console.ReadKey();
-
-static IServiceProvider BuildDependencyRoot(string templateDirectory)
+static IServiceProvider BuildDependencyRoot(string templateDirectory, string outputDirectory)
 {
     IServiceCollection services = new ServiceCollection();
     services.AddSingleton<IFileStructureLoaderFactory<TSqlStatement>, DefaultSqlFileStructureLoaderFactory>();
     services.AddSingleton<IFileStructureLoaderFactory<Template>, DefaultTemplateStructureLoaderFactory>();
+    services.AddSingleton<IFileWriter, DefaultFileWriter>();
+    services.AddSingleton<IFileStructureWriter>((provider) => new FlatFileStructureWriter(provider.GetRequiredService<IFileWriter>(), outputDirectory));
     services.AddSingleton<ISqlServerStatementHandler, DefaultSqlServerStatementHandler>();
 
     // Adds all Statement Handlers automatically without
@@ -60,6 +59,8 @@ static IServiceProvider BuildDependencyRoot(string templateDirectory)
         sp.GetRequiredService<IFileStructureLoaderFactory<Template>>(), 
         templateDirectory));
     services.AddSingleton<ITemplateProcessor<string>, StubbleTemplateProcessor>();
+    services.AddSingleton<ISqlTreeRenderer, DefaultTemplateSqlTreeRenderer>();
+
     return services.BuildServiceProvider();
 }
 
@@ -73,7 +74,7 @@ static async Task BuildSql(string template, bool noIndexPage, bool verbose, stri
         typeof(CreateTypeTableStatement),
     });
 
-    IServiceProvider provider = BuildDependencyRoot(template);
+    IServiceProvider provider = BuildDependencyRoot(template, output);
     var sqlLoaderFactory = provider.GetRequiredService<IFileStructureLoaderFactory<TSqlStatement>>();
     var handler = provider.GetRequiredService<ISqlServerStatementHandler>();
 
@@ -115,7 +116,8 @@ static async Task BuildSql(string template, bool noIndexPage, bool verbose, stri
             constraintHandler.Handle(constraint, tree, generator);
 
     // NOTE: Tree is built at this point
-
+    ISqlTreeRenderer renderer = provider.GetRequiredService<ISqlTreeRenderer>();
+    await renderer.RenderAsync(tree);
 }
 
 static SqlScriptGenerator CreateSqlGenerator()

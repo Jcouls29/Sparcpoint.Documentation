@@ -1,4 +1,0 @@
-﻿## Create Schema
-`CREATE SCHEMA [{{Owner}}].[{{Name}}]`
-
-Description Goes Here!!

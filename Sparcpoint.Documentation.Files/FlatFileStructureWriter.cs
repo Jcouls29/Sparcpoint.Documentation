@@ -1,23 +1,25 @@
 ﻿using Sparcpoint.Documentation.Abstractions;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
-namespace Sparcpoint.Documentation.Sql
+namespace Sparcpoint.Documentation.Files
 {
-    public sealed class SqlServerFileWriter : IFileStructureWriter
+    public sealed class FlatFileStructureWriter : IFileStructureWriter
     {
         private readonly IFileWriter _Writer;
         private readonly string _RootDirectory;
 
-        public SqlServerFileWriter(IFileWriter writer, string rootDirectory)
+        public FlatFileStructureWriter(IFileWriter writer, string rootDirectory)
         {
             _Writer = writer ?? throw new ArgumentNullException(nameof(writer));
             _RootDirectory = rootDirectory ?? throw new ArgumentNullException(nameof(rootDirectory));
         }
 
-        public Task Write<T>(string name, byte[] content)
+        public async Task WriteAsync<T>(string fileName, byte[] content)
         {
-            throw new NotImplementedException();
+            string path = Path.Combine(_RootDirectory, fileName);
+            await _Writer.WriteAsync(path, content);
         }
     }
 }

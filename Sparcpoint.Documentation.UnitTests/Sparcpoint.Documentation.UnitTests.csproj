@@ -14,4 +14,10 @@
     <PackageReference Include="coverlet.collector" Version="3.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sparcpoint.Documentation.Abstractions\Sparcpoint.Documentation.Abstractions.csproj" />
+    <ProjectReference Include="..\Sparcpoint.Documentation.Sql\Sparcpoint.Documentation.Sql.csproj" />
+    <ProjectReference Include="..\Sparcpoint.Documentation.Stubble\Sparcpoint.Documentation.Stubble.csproj" />
+  </ItemGroup>
+
 </Project>
