@@ -23,7 +23,12 @@ namespace Sparcpoint.Documentation.Sql
 
             var columns = new List<TableColumnModel>();
             foreach (var column in constraint.Columns)
-                columns.Add(table.GetColumn(generator.Generate(column)));
+            {
+                var foundColumn = table.GetColumn(generator.Generate(column));
+                foundColumn.IsPrimaryKey = true;
+                columns.Add(foundColumn);
+            }
+                
 
             primaryKey.Columns = new ColumnList(columns);
             table.PrimaryKeyConstraint = primaryKey;

@@ -31,6 +31,12 @@ namespace Sparcpoint.Documentation.Sql
         public override int GetHashCode()
             => HashCode.Combine(Schema, Name);
 
+        public string SchemaString
+            => $"[{Schema ?? "dbo"}]";
+
+        public string NameString
+            => $"[{Name}]";
+
         public override string ToString()
         {
             if (string.IsNullOrWhiteSpace(Schema))

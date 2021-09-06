@@ -1,4 +1,4 @@
-﻿# Schema: {{Identifier}}
+﻿# {{Identifier}} *(Schema)*
 {{{Description}}}
 
 {{#HasCreateStatement}}
@@ -13,7 +13,7 @@
 | Name | Description |
 | ---- | ----------- |
 {{#Tables}}
-| [{{Identifier}}](.\{{Identifier}}.md) | {{{Description}}} |
+| [{{Identifier}}](./{{Identifier}}.md) | {{{Description}}} |
 {{/Tables}}
 {{/HasTables}}
 
@@ -22,6 +22,33 @@
 | Name | Description |
 | ---- | ----------- |
 {{#TableTypes}}
-| [{{Identifier}}](.\{{Identifier}}.md) | {{Description}} |
+| [{{Identifier}}](./{{Identifier}}.md) | {{Description}} |
 {{/TableTypes}}
 {{/HasTableTypes}}
+
+{{#HasViews}}
+## Views
+| Name | Description |
+| ---- | ----------- |
+{{#Views}}
+| [{{Identifier}}](./{{Identifier}}.md) | {{Description}} |
+{{/Views}}
+{{/HasViews}}
+
+{{#HasStoredProcedures}}
+## Stored Procedures
+| Name | Description |
+| ---- | ----------- |
+{{#StoredProcedures}}
+| [{{Identifier}}](./{{Identifier}}.md) | {{Description}} |
+{{/StoredProcedures}}
+{{/HasStoredProcedures}}
+
+{{#HasSequences}}
+## Sequences
+| Name | Description |
+| ---- | ----------- |
+{{#Sequences}}
+| [{{Identifier}}](./{{Identifier}}.md) | {{Description}} |
+{{/Sequences}}
+{{/HasSequences}}

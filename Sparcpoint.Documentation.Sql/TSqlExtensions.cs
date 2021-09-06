@@ -88,6 +88,9 @@ namespace Sparcpoint.Documentation.Sql
             }).ToArray();
         }
 
+        public static string GetDescription(this TSqlStatement statement)
+            => GetDescription(statement.ScriptTokenStream, statement.FirstTokenIndex);
+
         public static string GetDescription(this IList<TSqlParserToken> tokens, int statementStart)
         {
             const string OPEN_TAG = "@Description";

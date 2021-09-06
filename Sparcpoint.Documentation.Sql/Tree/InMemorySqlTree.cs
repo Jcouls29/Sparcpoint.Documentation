@@ -14,6 +14,9 @@ namespace Sparcpoint.Documentation.Sql
             Schemas = new DefaultReadOnlySqlIndexer<SchemaModel>(this);
             Tables = new DefaultReadOnlySqlIndexer<TableModel>(this);
             TableTypes = new DefaultReadOnlySqlIndexer<TableTypeModel>(this);
+            Sequences = new DefaultReadOnlySqlIndexer<SequenceModel>(this);
+            Views = new DefaultReadOnlySqlIndexer<ViewModel>(this);
+            StoredProcedures = new DefaultReadOnlySqlIndexer<StoredProcedureModel>(this);
 
             _Models.Add(new SchemaModel
             {
@@ -24,6 +27,9 @@ namespace Sparcpoint.Documentation.Sql
         public IReadOnlySqlIndexer<SchemaModel> Schemas { get; }
         public IReadOnlySqlIndexer<TableModel> Tables { get; }
         public IReadOnlySqlIndexer<TableTypeModel> TableTypes { get; }
+        public IReadOnlySqlIndexer<SequenceModel> Sequences { get; }
+        public IReadOnlySqlIndexer<ViewModel> Views { get; }
+        public IReadOnlySqlIndexer<StoredProcedureModel> StoredProcedures { get; }
 
         public void Add<T>(T model) where T : ISqlModel
         {

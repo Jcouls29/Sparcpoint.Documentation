@@ -1,5 +1,4 @@
-﻿# Table: {{Identifier}}
-#### Schema: [{{Identifier.Schema}}](.\{{Identifier.Schema}}.md)
+﻿# [{{Identifier.SchemaString}}](./{{Identifier.SchemaString}}.md).{{Identifier.NameString}} *(Table)*
 
 {{{Description}}}
 
@@ -11,10 +10,10 @@
 
 ## Columns
 
-| Name | DataType | Nullable? | Primary Key? | Default Value | Description |
-| ---- | -------- | --------- | ------------ | ------------- | ----------- |
+| PK | Name | DataType | Default Value | Description |
+| -- | ---- | -------- | ------------- | ----------- |
 {{#Columns}}
-| {{Name}} | {{DataType}} | {{IsNullable}} | {{IsPrimaryKey}} | {{DefaultValue}} | {{{Description}}}
+| {{#IsPrimaryKey}}<img src="https://github.githubassets.com/images/icons/emoji/unicode/1f511.png?v" height=16 />{{/IsPrimaryKey}} | {{Name}} | {{DataType}} {{#IsNullable}}<b>?</b>{{/IsNullable}} | {{DefaultValue}} | {{{Description}}}
 {{/Columns}}
 
 {{#HasIndices}}
@@ -49,7 +48,7 @@
 ## Foreign Keys
 {{#ForeignKeys}}
 ### {{Name}}
-Target: [{{TargetTable.Identifier}}](.\{{TargetTable.Identifier}}.md)
+Target: [{{TargetTable.Identifier}}](./{{TargetTable.Identifier}}.md)
 
 | Local | Description | Foreign | Description |
 | ----- | ----------- | ------- | ----------- |

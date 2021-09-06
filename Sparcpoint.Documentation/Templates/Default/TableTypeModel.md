@@ -1,5 +1,4 @@
-﻿# User Defined Table Type: {{Identifier}}
-#### Schema: [{{Identifier.Schema}}](.\{{Identifier.Schema}}.md)
+﻿# [{{Identifier.SchemaString}}](./{{Identifier.SchemaString}}.md).{{Identifier.NameString}} *(User-Defined Table Type)*
 
 {{{Description}}}
 
@@ -14,5 +13,5 @@
 | Name | DataType | Nullable? | Default Value | Description |
 | ---- | -------- | --------- | ------------- | ----------- |
 {{#Columns}}
-| {{Name}} | {{DataType}} | {{IsNullable}} | {{DefaultValue}} | {{{Description}}}
+| {{Name}} | {{DataType}} | {{#IsNullable}}Y{{/IsNullable}} | {{DefaultValue}} | {{{Description}}}
 {{/Columns}}
