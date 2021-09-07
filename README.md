@@ -17,8 +17,9 @@ sp-docs --help
 ```
 
 # Supported Documentation Types
+
 ## SQL Server (`build-sql`)
---------------------------------
+
 Converts a set of SQL Server scripts (*.sql) to linked markdown files (by default).
 
 > **NOTE**: Only Microsoft SQL Server 15.0 is currently supported by the system.
