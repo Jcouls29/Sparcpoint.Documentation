@@ -1,11 +1,39 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+	<PackAsTool>true</PackAsTool>
+    <ToolCommandName>sp-docs</ToolCommandName>
+	<PackageOutputPath>./nupkg</PackageOutputPath>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AssemblyName>sp-docs</AssemblyName>
+    <Version>0.1.0</Version>
+    <Company>Sparcpoint, LLC</Company>
+    <Product>Sparcpoint Documentation CLI</Product>
+    <Description>A CLI tool for building and compiling various forms of documentation into a rendered output.
+
+(Supports SQL Server)</Description>
+    <Copyright>2021 Sparcpoint, LLC</Copyright>
+    <Authors>Justin Coulston</Authors>
+    <PackageProjectUrl>https://github.com/Jcouls29/Sparcpoint.Documentation</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/Jcouls29/Sparcpoint.Documentation</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>documentation;sql;sparcpoint</PackageTags>
+    <PackageReleaseNotes>Includes Sql Server documentation builder</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Sparcpoint.Documentation\**" />
+    <EmbeddedResource Remove="Sparcpoint.Documentation\**" />
+    <None Remove="Sparcpoint.Documentation\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
