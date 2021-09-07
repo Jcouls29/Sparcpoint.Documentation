@@ -15,19 +15,24 @@ namespace Sparcpoint.Documentation.Sql
                 DeleteAction = constraint.DeleteAction,
                 UpdateAction = constraint.UpdateAction
             };
-
-            List<TableColumnModel> localColumns = new List<TableColumnModel>();
-            foreach(var column in constraint.Columns)
-                localColumns.Add(table.GetColumn(generator.Generate(column)));
-
-            fk.LocalColumns = new ColumnList(localColumns);
             fk.TargetTable = tree.Tables[constraint.ReferenceTableName.ToSqlIdentifier()];
 
+            // Local Columns
+            List<TableColumnModel> localColumns = new List<TableColumnModel>();
+            foreach(var column in constraint.Columns)
+            {
+                localColumns.Add(table.GetColumn(generator.Generate(column)));
+            }
+            fk.LocalColumns = new ColumnList(localColumns);
+
+            // Foreign / Target Columns
             List<TableColumnModel> targetColumns = new List<TableColumnModel>();
             foreach (var column in constraint.ReferencedTableColumns)
+            {
                 targetColumns.Add(fk.TargetTable.GetColumn(generator.Generate(column)));
-
+            }
             fk.ForeignColumns = new ColumnList(targetColumns);
+
             table.ForeignKeys.Add(fk);
         }
     }

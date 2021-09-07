@@ -1,28 +1,19 @@
 ﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sparcpoint.Documentation.Sql
 {
-    public class CreateFunctionStatementHandler : ISqlServerStatementHandler<CreateFunctionStatement>
+    public class CreateFunctionStatementHandler : SchemaBasedStatementHandler<CreateFunctionStatement, FunctionModel>
     {
-        public async Task HandleAsync(CreateFunctionStatement statement, ISqlTree tree, SqlScriptGenerator generator)
-        {
-            if (statement?.Name?.SchemaIdentifier?.Value == null)
-                statement.Name.SchemaIdentifier.Value = "dbo";
+        protected override FunctionModel CreateModel(SqlIdentifier identifier, SchemaModel schema)
+            => new FunctionModel(schema);
 
-            var identifier = statement.Name.ToSqlIdentifier();
-            var schema = tree.Schemas[identifier.ToSchemaIdentifier()];
+        protected override IList<FunctionModel> GetSchemaModelCollection(SchemaModel schema)
+            => schema.Functions;
 
-            var view = new FunctionModel(schema)
-            {
-                Identifier = identifier,
-                Description = statement.GetDescription(),
-                Fragment = statement,
-                CreateStatement = generator.Generate(statement)
-            };
-
-            tree.Add(view);
-            schema.Functions.Add(view);
-        }
+        protected override SchemaObjectName GetSchemaObjectName(CreateFunctionStatement statement)
+            => statement.Name;
     }
 }

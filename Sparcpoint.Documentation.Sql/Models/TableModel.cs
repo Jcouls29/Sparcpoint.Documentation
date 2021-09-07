@@ -14,7 +14,7 @@ namespace Sparcpoint.Documentation.Sql
 
         public SchemaModel Schema { get; }
 
-        public TableColumnModel[] Columns { get; set; }
+        public ColumnList Columns { get; set; } = new ColumnList();
 
         public IList<TableIndexModel> UniqueIndices { get; } = new List<TableIndexModel>();
         public bool HasUniqueIndices => UniqueIndices?.Any() ?? false;

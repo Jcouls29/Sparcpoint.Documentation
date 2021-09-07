@@ -22,11 +22,13 @@ namespace Sparcpoint.Documentation.Files
 
             string found = files.FirstOrDefault(f => string.Equals(Path.GetFileNameWithoutExtension(f), typeof(TInput).Name, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrWhiteSpace(found))
+            {
                 return Task.FromResult((Template?)new Template
                 {
                     Source = found,
                     Value = File.ReadAllText(found)
                 });
+            }
 
             return Task.FromResult((Template?)null);
         }

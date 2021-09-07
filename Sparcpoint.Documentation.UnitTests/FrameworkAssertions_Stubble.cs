@@ -35,7 +35,7 @@ public class FrameworkAssertions_Stubble
             Description = "Holds all users within the system."
         };
 
-        model.Columns = new[]
+        model.Columns = new ColumnList(new[]
         {
             new TableColumnModel(model)
             {
@@ -49,7 +49,7 @@ public class FrameworkAssertions_Stubble
                 Description = "The name of the user.",
                 DataType = "VARCHAR (64)"
             }
-        };
+        });
 
         string output = await _Processor.ProcessAsync(new Abstractions.Template { Value = TEMPLATE }, model);
         Assert.AreEqual(@"

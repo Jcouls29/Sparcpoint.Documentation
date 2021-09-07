@@ -1,4 +1,5 @@
-﻿using Sparcpoint.Documentation.Abstractions;
+﻿using Microsoft.Extensions.Options;
+using Sparcpoint.Documentation.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +13,18 @@ namespace Sparcpoint.Documentation.Sql
         private readonly ITemplateLoader _TemplateLoader;
         private readonly ITemplateProcessor<string> _TemplateProcessor;
         private readonly IFileStructureWriter _FileWriter;
+        private readonly IOptionsMonitor<TreeRendererOptions> _Options;
 
         public DefaultTemplateSqlTreeRenderer(
             ITemplateLoader templateLoader, 
             ITemplateProcessor<string> templateProcessor, 
-            IFileStructureWriter fileWriter)
+            IFileStructureWriter fileWriter,
+            IOptionsMonitor<TreeRendererOptions> options)
         {
             _TemplateLoader = templateLoader ?? throw new ArgumentNullException(nameof(templateLoader));
             _TemplateProcessor = templateProcessor ?? throw new ArgumentNullException(nameof(templateProcessor));
             _FileWriter = fileWriter ?? throw new ArgumentNullException(nameof(fileWriter));
+            _Options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         public async Task RenderAsync(IReadOnlySqlTree tree)
@@ -34,7 +38,8 @@ namespace Sparcpoint.Documentation.Sql
             await RenderAsync(tree.Functions);
             await RenderAsync(tree.DataTypes);
 
-            await RenderIndexAsync(tree);
+            if (_Options.CurrentValue?.RenderIndex ?? true)
+                await RenderIndexAsync(tree);
         }
 
         private async Task RenderIndexAsync(IReadOnlySqlTree tree)

@@ -1,28 +1,18 @@
 ﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sparcpoint.Documentation.Sql
 {
-    public class CreateTypeStatementHandler : ISqlServerStatementHandler<CreateTypeUddtStatement>
+    public class CreateTypeStatementHandler : SchemaBasedStatementHandler<CreateTypeUddtStatement, DataTypeModel>
     {
-        public async Task HandleAsync(CreateTypeUddtStatement statement, ISqlTree tree, SqlScriptGenerator generator)
-        {
-            if (statement?.Name?.SchemaIdentifier?.Value == null)
-                statement.Name.SchemaIdentifier.Value = "dbo";
+        protected override DataTypeModel CreateModel(SqlIdentifier identifier, SchemaModel schema)
+            => new DataTypeModel(schema);
 
-            var identifier = statement.Name.ToSqlIdentifier();
-            var schema = tree.Schemas[identifier.ToSchemaIdentifier()];
+        protected override IList<DataTypeModel> GetSchemaModelCollection(SchemaModel schema)
+            => schema.DataTypes;
 
-            var dataType = new DataTypeModel(schema)
-            {
-                Identifier = identifier,
-                Description = statement.GetDescription(),
-                Fragment = statement,
-                CreateStatement = generator.Generate(statement)
-            };
-
-            tree.Add(dataType);
-            schema.DataTypes.Add(dataType);
-        }
+        protected override SchemaObjectName GetSchemaObjectName(CreateTypeUddtStatement statement)
+            => statement.Name;
     }
 }

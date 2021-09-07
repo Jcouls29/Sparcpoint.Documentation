@@ -23,9 +23,11 @@ namespace Sparcpoint.Documentation.Files
         {
             IEnumerable<string> allFiles = Directory.EnumerateFiles(_Path, _Pattern, SearchOption.AllDirectories);
             if (_ExceptFolderNames?.Any() ?? false)
+            {
                 allFiles = allFiles
                     .Where(f => !_ExceptFolderNames.Any(folderName => f.Contains(@$"\{folderName}\")))
                     .ToArray();
+            }
 
             return allFiles;
         }

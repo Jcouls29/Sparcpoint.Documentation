@@ -27,9 +27,9 @@ namespace Sparcpoint.Documentation.Sql
             {
                 var foundColumn = table.GetColumn(generator.Generate(column));
                 foundColumn.IsPrimaryKey = true;
+
                 columns.Add(foundColumn);
             }
-                
 
             primaryKey.Columns = new ColumnList(columns);
             table.PrimaryKeyConstraint = primaryKey;

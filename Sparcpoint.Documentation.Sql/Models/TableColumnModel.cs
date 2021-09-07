@@ -11,9 +11,9 @@ namespace Sparcpoint.Documentation.Sql
 
         public ISqlModel ParentReference { get; }
 
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string DataType { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string DataType { get; set; } = string.Empty;
         public bool IsNullable { get; set; }
         public bool IsPrimaryKey { get; set; }
         public string? DefaultValue { get; set; }

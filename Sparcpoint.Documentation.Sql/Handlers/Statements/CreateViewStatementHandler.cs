@@ -1,28 +1,18 @@
 ﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sparcpoint.Documentation.Sql
 {
-    public class CreateViewStatementHandler : ISqlServerStatementHandler<CreateViewStatement>
+    public class CreateViewStatementHandler : SchemaBasedStatementHandler<CreateViewStatement, ViewModel>
     {
-        public async Task HandleAsync(CreateViewStatement statement, ISqlTree tree, SqlScriptGenerator generator)
-        {
-            if (statement?.SchemaObjectName?.SchemaIdentifier?.Value == null)
-                statement.SchemaObjectName.SchemaIdentifier.Value = "dbo";
+        protected override ViewModel CreateModel(SqlIdentifier identifier, SchemaModel schema)
+            => new ViewModel(schema);
 
-            var identifier = statement.SchemaObjectName.ToSqlIdentifier();
-            var schema = tree.Schemas[identifier.ToSchemaIdentifier()];
+        protected override IList<ViewModel> GetSchemaModelCollection(SchemaModel schema)
+            => schema.Views;
 
-            var view = new ViewModel(schema)
-            {
-                Identifier = identifier,
-                Description = statement.GetDescription(),
-                Fragment = statement,
-                CreateStatement = generator.Generate(statement)
-            };
-
-            tree.Add(view);
-            schema.Views.Add(view);
-        }
+        protected override SchemaObjectName GetSchemaObjectName(CreateViewStatement statement)
+            => statement.SchemaObjectName;
     }
 }

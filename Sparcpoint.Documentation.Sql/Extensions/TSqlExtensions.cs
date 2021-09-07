@@ -1,4 +1,5 @@
 ﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
+using Sparcpoint.Documentation.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,10 +38,13 @@ namespace Sparcpoint.Documentation.Sql
             };
         }
 
-        public static string? Generate(this SqlScriptGenerator generator, TSqlFragment fragment)
+        public static string Generate(this SqlScriptGenerator generator, TSqlFragment fragment)
         {
-            if (fragment == null || generator == null)
-                return null;
+            if (generator == null)
+                throw new ArgumentNullException(nameof(generator));
+            
+            if (fragment == null)
+                return string.Empty;
 
             generator.GenerateScript(fragment, out string script);
             return script;

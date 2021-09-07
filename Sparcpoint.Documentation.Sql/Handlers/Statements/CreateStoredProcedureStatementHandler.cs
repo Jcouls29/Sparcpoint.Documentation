@@ -1,28 +1,18 @@
 ﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sparcpoint.Documentation.Sql
 {
-    public class CreateStoredProcedureStatementHandler : ISqlServerStatementHandler<CreateProcedureStatement>
+    public class CreateStoredProcedureStatementHandler : SchemaBasedStatementHandler<CreateProcedureStatement, StoredProcedureModel>
     {
-        public async Task HandleAsync(CreateProcedureStatement statement, ISqlTree tree, SqlScriptGenerator generator)
-        {
-            if (statement?.ProcedureReference?.Name?.SchemaIdentifier?.Value == null)
-                statement.ProcedureReference.Name.SchemaIdentifier.Value = "dbo";
+        protected override StoredProcedureModel CreateModel(SqlIdentifier identifier, SchemaModel schema)
+            => new StoredProcedureModel(schema);
 
-            var identifier = statement.ProcedureReference.Name.ToSqlIdentifier();
-            var schema = tree.Schemas[identifier.ToSchemaIdentifier()];
+        protected override IList<StoredProcedureModel> GetSchemaModelCollection(SchemaModel schema)
+            => schema.StoredProcedures;
 
-            var procedure = new StoredProcedureModel(schema)
-            {
-                Identifier = identifier,
-                Description = statement.GetDescription(),
-                Fragment = statement,
-                CreateStatement = generator.Generate(statement)
-            };
-
-            tree.Add(procedure);
-            schema.StoredProcedures.Add(procedure);
-        }
+        protected override SchemaObjectName GetSchemaObjectName(CreateProcedureStatement statement)
+            => statement.ProcedureReference.Name;
     }
 }

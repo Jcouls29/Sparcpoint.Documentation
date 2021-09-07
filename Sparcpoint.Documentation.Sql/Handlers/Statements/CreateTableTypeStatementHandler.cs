@@ -5,22 +5,11 @@ namespace Sparcpoint.Documentation.Sql
 {
     public class CreateTableTypeStatementHandler : ISqlServerStatementHandler<CreateTypeTableStatement>
     {
-        public async Task HandleAsync(CreateTypeTableStatement statement, ISqlTree tree, SqlScriptGenerator generator)
+        public void Handle(CreateTypeTableStatement statement, ISqlTree tree, SqlScriptGenerator generator)
         {
-            if (statement?.Name?.SchemaIdentifier?.Value == null)
-                statement.Name.SchemaIdentifier.Value = "dbo";
+            var (identifier, schema) = tree.GetIdentifierDetails(statement.Name);
 
-            var identifier = statement.Name.ToSqlIdentifier();
-            var schema = tree.Schemas[identifier.ToSchemaIdentifier()];
-
-            var tableType = new TableTypeModel(schema)
-            {
-                Identifier = identifier,
-                Description = statement.GetDescription(),
-                Fragment = statement,
-                CreateStatement = generator.Generate(statement),
-            };
-
+            var tableType = StatementHelpers.FillModel(new TableTypeModel(schema), identifier, statement, generator);
             tableType.Columns = new ColumnList(statement.Definition.GetColumns(tableType, generator));
 
             tree.Add(tableType);

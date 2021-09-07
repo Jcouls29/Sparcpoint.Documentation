@@ -1,28 +1,18 @@
 ﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sparcpoint.Documentation.Sql
 {
-    public class CreateSequenceStatementHandler : ISqlServerStatementHandler<CreateSequenceStatement>
+    public class CreateSequenceStatementHandler : SchemaBasedStatementHandler<CreateSequenceStatement, SequenceModel>
     {
-        public async Task HandleAsync(CreateSequenceStatement statement, ISqlTree tree, SqlScriptGenerator generator)
-        {
-            if (statement?.Name?.SchemaIdentifier?.Value == null)
-                statement.Name.SchemaIdentifier.Value = "dbo";
+        protected override SequenceModel CreateModel(SqlIdentifier identifier, SchemaModel schema)
+            => new SequenceModel(schema);
 
-            var identifier = statement.Name.ToSqlIdentifier();
-            var schema = tree.Schemas[identifier.ToSchemaIdentifier()];
+        protected override IList<SequenceModel> GetSchemaModelCollection(SchemaModel schema)
+            => schema.Sequences;
 
-            var sequence = new SequenceModel(schema)
-            {
-                Identifier = identifier,
-                Description = statement.GetDescription(),
-                Fragment = statement,
-                CreateStatement = generator.Generate(statement)
-            };
-
-            tree.Add(sequence);
-            schema.Sequences.Add(sequence);
-        }
+        protected override SchemaObjectName GetSchemaObjectName(CreateSequenceStatement statement)
+            => statement.Name;
     }
 }

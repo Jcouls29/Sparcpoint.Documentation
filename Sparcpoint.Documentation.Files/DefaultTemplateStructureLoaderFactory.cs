@@ -1,8 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using Sparcpoint.Documentation.Abstractions;
+﻿using Sparcpoint.Documentation.Abstractions;
 using Sparcpoint.Documentation.Files;
-using System.Text;
+using System;
+using System.IO;
 
 public class DefaultTemplateStructureLoaderFactory : IFileStructureLoaderFactory<Template>
 {

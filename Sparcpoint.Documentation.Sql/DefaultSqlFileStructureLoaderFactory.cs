@@ -1,8 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using Microsoft.SqlServer.TransactSql.ScriptDom;
+﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
 using Sparcpoint.Documentation.Abstractions;
 using Sparcpoint.Documentation.Files;
+using System;
+using System.IO;
 
 public class DefaultSqlFileStructureLoaderFactory : IFileStructureLoaderFactory<TSqlStatement>
 {

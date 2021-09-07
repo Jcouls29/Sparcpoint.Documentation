@@ -14,18 +14,6 @@ namespace Sparcpoint.Documentation.Sql
 
         public bool HasCreateStatement => CreateStatement != null;
 
-        public virtual Dictionary<string, object> GetProperties()
-        {
-            IEnumerable<PropertyInfo> properties = GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            return properties
-                .Where(prop => prop.Name != nameof(ISqlModel.Fragment))
-                .Select(prop => new
-            {
-                Key = prop.Name,
-                Value = prop.GetValue(this)
-            }).ToDictionary(kv => kv.Key, kv => kv.Value);
-        }
-
         public override string ToString()
             => Identifier.ToString();
     }

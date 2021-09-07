@@ -6,11 +6,11 @@ namespace Sparcpoint.Documentation.Sql
     public class ForeignKeyReference
     {
         public SqlIdentifier Name { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
-        public TableModel TargetTable { get; set; }
-        public ColumnList LocalColumns { get; set; }
-        public ColumnList ForeignColumns { get; set; }
+        public TableModel? TargetTable { get; set; } = null;
+        public ColumnList LocalColumns { get; set; } = new ColumnList();
+        public ColumnList ForeignColumns { get; set; } = new ColumnList();
 
         public IEnumerable<ForeignKeyColumnMap> ColumnMapping
         {
@@ -32,7 +32,7 @@ namespace Sparcpoint.Documentation.Sql
         public DeleteUpdateAction DeleteAction { get; set; }
         public DeleteUpdateAction UpdateAction { get; set; }
 
-        public TSqlFragment Fragment { get; set; }
+        public TSqlFragment? Fragment { get; set; }
     }
 
     public class ForeignKeyColumnMap
