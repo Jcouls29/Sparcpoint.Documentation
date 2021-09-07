@@ -5,7 +5,7 @@
     <ToolCommandName>sp-docs</ToolCommandName>
 	<PackageOutputPath>./nupkg</PackageOutputPath>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AssemblyName>sp-docs</AssemblyName>
     <Version>0.1.0</Version>

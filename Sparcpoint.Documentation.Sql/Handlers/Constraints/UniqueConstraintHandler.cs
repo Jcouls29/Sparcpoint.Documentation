@@ -8,6 +8,8 @@ namespace Sparcpoint.Documentation.Sql
     {
         public void Handle(TableModel table, UniqueConstraintDefinition constraint, ISqlTree tree, SqlScriptGenerator generator)
         {
+            constraint.ConstraintIdentifier.EnsureBracketQuotes();
+
             if (constraint.IsPrimaryKey)
                 HandlePrimaryKey(table, constraint, tree, generator);
             else
@@ -16,6 +18,13 @@ namespace Sparcpoint.Documentation.Sql
 
         private void HandlePrimaryKey(TableModel table, UniqueConstraintDefinition constraint, ISqlTree tree, SqlScriptGenerator generator)
         {
+            if (constraint.ConstraintIdentifier == null)
+                constraint.ConstraintIdentifier = new Identifier
+                {
+                    QuoteType = QuoteType.SquareBracket,
+                    Value = $"PK_{table.Identifier.Name}",
+                };
+
             var primaryKey = new PrimaryKeyConstraint
             {
                 Name = constraint.ConstraintIdentifier.ToSqlIdentifier(),

@@ -1,8 +1,16 @@
 ﻿using System.CommandLine;
+using System.Threading.Tasks;
 
-var rootCommand = new RootCommand
+public static class Program
 {
-    BuildSqlCommand.GetCommand()
-};
+    public static async Task Main(string[] args)
+    {
+        var rootCommand = new RootCommand
+        {
+            BuildSqlCommand.GetCommand()
+        };
 
-await rootCommand.InvokeAsync(args);
+        await rootCommand.InvokeAsync(args);
+    }
+} 
+

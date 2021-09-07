@@ -1,15 +1,18 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.SqlServer.TransactSql.ScriptDom;
 using Sparcpoint.Documentation.Abstractions;
 using Sparcpoint.Documentation.Files;
 using Sparcpoint.Documentation.Sql;
 using Sparcpoint.Documentation.Stubble;
+using System;
+using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 public static class BuildSqlCommand
 {
@@ -161,7 +164,7 @@ public static class BuildSqlCommand
         {
             KeywordCasing = KeywordCasing.Uppercase,
             SqlEngineType = SqlEngineType.All,
-            IncludeSemicolons = true
+            IncludeSemicolons = true,
         });
     }
 

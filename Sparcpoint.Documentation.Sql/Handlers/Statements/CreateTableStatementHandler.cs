@@ -17,12 +17,30 @@ namespace Sparcpoint.Documentation.Sql
             {
                 foreach(var constraint in statement.Definition.TableConstraints)
                 {
+                    NormalizeConstraint(constraint);
                     tree.DeferConstraint(table, constraint);
                 }
             }
 
             tree.Add(table);
             schema.Tables.Add(table);
+        }
+
+        private void NormalizeConstraint(ConstraintDefinition definition)
+        {
+            if (definition is ForeignKeyConstraintDefinition fk)
+            {
+                fk.Columns.EnsureBracketQuotes();
+                fk.ReferencedTableColumns.EnsureBracketQuotes();
+            } else if (definition is UniqueConstraintDefinition uq)
+            {
+                uq.ConstraintIdentifier.EnsureBracketQuotes();
+
+                foreach(var c in uq.Columns)
+                {
+                    c.Column.EnsureBracketQuotes();
+                }
+            }
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using NUnit.Framework;
 using Sparcpoint.Documentation.Sql;
 using Sparcpoint.Documentation.Stubble;
-
-namespace Sparcpoint.Documentation.UnitTests;
+using System.Threading.Tasks;
 
 public class FrameworkAssertions_Stubble
 {
@@ -51,7 +50,7 @@ public class FrameworkAssertions_Stubble
             }
         });
 
-        string output = await _Processor.ProcessAsync(new Abstractions.Template { Value = TEMPLATE }, model);
+        string output = await _Processor.ProcessAsync(new Sparcpoint.Documentation.Abstractions.Template { Value = TEMPLATE }, model);
         Assert.AreEqual(@"
 # TABLE [dbo].[Users]
 Holds all users within the system.

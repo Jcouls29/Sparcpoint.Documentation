@@ -7,6 +7,9 @@ namespace Sparcpoint.Documentation.Sql
     {
         public void Handle(TableModel table, ForeignKeyConstraintDefinition constraint, ISqlTree tree, SqlScriptGenerator generator)
         {
+            constraint.ReferenceTableName.EnsureBracketQuotes();
+            var referenceTableName = constraint.ReferenceTableName.ToSqlIdentifier();
+
             var fk = new ForeignKeyReference
             {
                 Name = constraint.ConstraintIdentifier,
@@ -15,12 +18,13 @@ namespace Sparcpoint.Documentation.Sql
                 DeleteAction = constraint.DeleteAction,
                 UpdateAction = constraint.UpdateAction
             };
-            fk.TargetTable = tree.Tables[constraint.ReferenceTableName.ToSqlIdentifier()];
+            fk.TargetTable = tree.Tables[referenceTableName];
 
             // Local Columns
             List<TableColumnModel> localColumns = new List<TableColumnModel>();
             foreach(var column in constraint.Columns)
             {
+                column.QuoteType = QuoteType.SquareBracket;
                 localColumns.Add(table.GetColumn(generator.Generate(column)));
             }
             fk.LocalColumns = new ColumnList(localColumns);
@@ -29,6 +33,7 @@ namespace Sparcpoint.Documentation.Sql
             List<TableColumnModel> targetColumns = new List<TableColumnModel>();
             foreach (var column in constraint.ReferencedTableColumns)
             {
+                column.QuoteType = QuoteType.SquareBracket;
                 targetColumns.Add(fk.TargetTable.GetColumn(generator.Generate(column)));
             }
             fk.ForeignColumns = new ColumnList(targetColumns);

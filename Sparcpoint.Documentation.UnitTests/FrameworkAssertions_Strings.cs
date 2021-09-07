@@ -1,6 +1,5 @@
 using NUnit.Framework;
 
-namespace Sparcpoint.Documentation.UnitTests;
 public class FrameworkAssertions_Strings
 {
     [Theory]

@@ -20,7 +20,7 @@ namespace Sparcpoint.Documentation.Sql
             if (name.SchemaIdentifier?.Value == null)
                 name.SchemaIdentifier.Value = "dbo";
 
-            var identifier = name.ToSqlIdentifier();
+            var identifier = name.EnsureBracketQuotes().ToSqlIdentifier();
             var schema = tree.Schemas[identifier.ToSchemaIdentifier()];
 
             return (identifier, schema);

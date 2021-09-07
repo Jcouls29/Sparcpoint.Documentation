@@ -79,6 +79,8 @@ namespace Sparcpoint.Documentation.Sql
 
             return definition.ColumnDefinitions.Select(def =>
             {
+                def.ColumnIdentifier.EnsureBracketQuotes();
+
                 return new TableColumnModel(parentReference)
                 {
                     Name = generator.Generate(def.ColumnIdentifier),
@@ -166,6 +168,45 @@ namespace Sparcpoint.Documentation.Sql
                 throw new ArgumentException("Not a single line comment.");
 
             return token.Text.TrimStart('-', ' ').Trim();
+        }
+
+        public static T EnsureBracketQuotes<T>(this T identifiers)
+            where T : IEnumerable<Identifier>
+        {
+            foreach (var id in identifiers)
+                id.EnsureBracketQuotes();
+
+            return identifiers;
+        }
+
+        public static ColumnReferenceExpression EnsureBracketQuotes(this ColumnReferenceExpression expression)
+        {
+            if (expression != null)
+                expression.MultiPartIdentifier?.Identifiers?.EnsureBracketQuotes();
+
+            return expression;
+        }
+
+        public static Identifier EnsureBracketQuotes(this Identifier id)
+        {
+            if (id != null)
+                id.QuoteType = QuoteType.SquareBracket;
+
+            return id;
+        }
+
+        public static SchemaObjectName EnsureBracketQuotes(this SchemaObjectName name)
+        {
+            if (name.SchemaIdentifier != null)
+                name.SchemaIdentifier.QuoteType = QuoteType.SquareBracket;
+
+            if (name.BaseIdentifier != null)
+                name.BaseIdentifier.QuoteType = QuoteType.SquareBracket;
+
+            if (name.DatabaseIdentifier != null)
+                name.DatabaseIdentifier.QuoteType = QuoteType.SquareBracket;
+
+            return name;
         }
     }
 }

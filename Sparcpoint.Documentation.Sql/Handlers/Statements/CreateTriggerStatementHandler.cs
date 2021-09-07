@@ -17,7 +17,7 @@ namespace Sparcpoint.Documentation.Sql
                 IsDelete = statement.TriggerActions.Any(act => act.TriggerActionType == TriggerActionType.Delete),
             }, identifier, statement, generator);
 
-            var targetId = statement.TriggerObject.Name.ToSqlIdentifier();
+            var targetId = statement.TriggerObject.Name.EnsureBracketQuotes().ToSqlIdentifier();
             TableModel targetTable = tree.Tables[targetId];
             if (targetTable != null)
             {

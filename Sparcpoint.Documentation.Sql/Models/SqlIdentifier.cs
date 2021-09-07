@@ -7,11 +7,11 @@ namespace Sparcpoint.Documentation.Sql
     {
         public SqlIdentifier(string name, string? schema = null)
         {
-            Schema = schema;
+            Schema = schema ?? "dbo";
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
-        public string? Schema { get; set; }
+        public string Schema { get; set; }
         public string Name { get; set; }
 
         public SqlIdentifier ToSchemaIdentifier()
@@ -32,7 +32,7 @@ namespace Sparcpoint.Documentation.Sql
             => HashCode.Combine(Schema, Name);
 
         public string SchemaString
-            => $"[{Schema ?? "dbo"}]";
+            => $"[{Schema}]";
 
         public string NameString
             => $"[{Name}]";

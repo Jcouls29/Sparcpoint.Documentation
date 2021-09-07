@@ -13,6 +13,8 @@ namespace Sparcpoint.Documentation.Sql
             TableIndexModel index = StatementHelpers.FillModel(new TableIndexModel(), statement.Name, statement, generator);
             index.Columns = statement.Columns.Select(c =>
             {
+                c.Column.EnsureBracketQuotes();
+
                 bool isAscending = c.SortOrder != SortOrder.Descending;
                 string columnName = generator.Generate(c.Column);
 
@@ -25,6 +27,9 @@ namespace Sparcpoint.Documentation.Sql
 
             if (statement.IncludeColumns?.Any() ?? false)
             {
+                foreach (var c in statement.IncludeColumns)
+                    c.EnsureBracketQuotes();
+
                 index.IncludeColumns = new ColumnList(statement.IncludeColumns.Select(c => table.GetColumn(generator.Generate(c))));
             }
 
