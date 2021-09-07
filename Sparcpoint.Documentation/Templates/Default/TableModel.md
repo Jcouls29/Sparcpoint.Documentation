@@ -19,7 +19,7 @@
 {{#HasIndices}}
 ## Indices
 {{#Indices}}
-### {{Identifier}}
+### `{{Identifier}}`
 {{{Description}}}
 
 {{#HasCreateStatement}}
@@ -33,7 +33,7 @@
 {{#HasUniqueIndices}}
 ## Unique Indices
 {{#UniqueIndices}}
-### {{Identifier}}
+### `{{Identifier}}`
 {{{Description}}}
 
 {{#HasCreateStatement}}
@@ -47,8 +47,10 @@
 {{#HasForeignKeys}}
 ## Foreign Keys
 {{#ForeignKeys}}
-### {{Name}}
+### `{{Name}}`
 Target: [{{TargetTable.Identifier}}](./{{TargetTable.Identifier}}.md)
+
+{{{Description}}}
 
 | Local | Description | Foreign | Description |
 | ----- | ----------- | ------- | ----------- |
@@ -57,3 +59,18 @@ Target: [{{TargetTable.Identifier}}](./{{TargetTable.Identifier}}.md)
 {{/ColumnMapping}}
 {{/ForeignKeys}}
 {{/HasForeignKeys}}
+
+{{#HasTriggers}}
+## Triggers
+{{#Triggers}}
+### `{{Identifier}}`
+{{{Description}}}
+
+{{#HasCreateStatement}}
+```SQL
+{{{CreateStatement}}}
+```
+{{/HasCreateStatement}}
+
+{{/Triggers}}
+{{/HasTriggers}}

@@ -91,6 +91,9 @@ namespace Sparcpoint.Documentation.Sql
         public static string GetDescription(this TSqlStatement statement)
             => GetDescription(statement.ScriptTokenStream, statement.FirstTokenIndex);
 
+        public static string GetDescription(this ConstraintDefinition constraint)
+            => GetDescription(constraint.ScriptTokenStream, constraint.FirstTokenIndex);
+
         public static string GetDescription(this IList<TSqlParserToken> tokens, int statementStart)
         {
             const string OPEN_TAG = "@Description";

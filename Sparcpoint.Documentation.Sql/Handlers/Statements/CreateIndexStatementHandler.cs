@@ -18,6 +18,7 @@ namespace Sparcpoint.Documentation.Sql
             {
                 Identifier = new SqlIdentifier(statement.Name.Value),
                 Fragment = statement,
+                Description = statement.GetDescription(),
                 Columns = statement.Columns.Select(c =>
                 {
                     bool isAscending = c.SortOrder != SortOrder.Descending;

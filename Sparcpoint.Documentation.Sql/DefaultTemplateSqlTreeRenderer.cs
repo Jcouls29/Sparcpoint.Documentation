@@ -31,6 +31,8 @@ namespace Sparcpoint.Documentation.Sql
             await RenderAsync(tree.Sequences);
             await RenderAsync(tree.Views);
             await RenderAsync(tree.StoredProcedures);
+            await RenderAsync(tree.Functions);
+            await RenderAsync(tree.DataTypes);
 
             await RenderIndexAsync(tree);
         }
@@ -47,7 +49,9 @@ namespace Sparcpoint.Documentation.Sql
                     TableTypes = tree.TableTypes,
                     Views = tree.Views,
                     StoredProcedures = tree.StoredProcedures,
-                    Sequences = tree.Sequences
+                    Sequences = tree.Sequences,
+                    Functions = tree.Functions,
+                    DataTypes = tree.DataTypes,
                 });
                 await _FileWriter.WriteAsync<Index>($"Index{template.FileExtension}", Encoding.UTF8.GetBytes(output));
             }
@@ -84,6 +88,12 @@ namespace Sparcpoint.Documentation.Sql
 
             public IEnumerable<SequenceModel> Sequences { get; set; }
             public bool HasSequences => Sequences?.Any() ?? false;
+
+            public IEnumerable<FunctionModel> Functions { get; set; }
+            public bool HasFunctions => Functions?.Any() ?? false;
+
+            public IEnumerable<DataTypeModel> DataTypes { get; set; }
+            public bool HasDataTypes => DataTypes?.Any() ?? false;
         }
     }
 }

@@ -18,7 +18,8 @@ namespace Sparcpoint.Documentation.Sql
         {
             var primaryKey = new PrimaryKeyConstraint
             {
-                Name = constraint.ConstraintIdentifier.ToSqlIdentifier()
+                Name = constraint.ConstraintIdentifier.ToSqlIdentifier(),
+                Description = constraint.GetDescription(),
             };
 
             var columns = new List<TableColumnModel>();

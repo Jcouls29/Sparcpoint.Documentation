@@ -14,6 +14,8 @@ namespace Sparcpoint.Documentation.Sql
         IReadOnlySqlIndexer<SequenceModel> Sequences { get; }
         IReadOnlySqlIndexer<ViewModel> Views { get; }
         IReadOnlySqlIndexer<StoredProcedureModel> StoredProcedures { get; }
+        IReadOnlySqlIndexer<FunctionModel> Functions { get; }
+        IReadOnlySqlIndexer<DataTypeModel> DataTypes { get; }
     }
 
     public interface ISqlTree : IReadOnlySqlTree

@@ -17,7 +17,13 @@ namespace Sparcpoint.Documentation.Sql
         public IList<ViewModel> Views { get; } = new List<ViewModel>();
         public bool HasViews => Views?.Any() ?? false;
 
+        public IList<DataTypeModel> DataTypes { get; } = new List<DataTypeModel>();
+        public bool HasDataTypes => DataTypes?.Any() ?? false;
+
         public IList<StoredProcedureModel> StoredProcedures { get; } = new List<StoredProcedureModel>();
         public bool HasStoredProcedures => StoredProcedures?.Any() ?? false;
+
+        public IList<FunctionModel> Functions { get; } = new List<FunctionModel>();
+        public bool HasFunctions => Functions?.Any() ?? false;
     }
 }

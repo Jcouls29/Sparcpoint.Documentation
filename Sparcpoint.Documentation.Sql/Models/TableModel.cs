@@ -27,6 +27,9 @@ namespace Sparcpoint.Documentation.Sql
 
         public PrimaryKeyConstraint? PrimaryKeyConstraint { get; set; }
 
+        public IList<TriggerModel> Triggers { get; set; } = new List<TriggerModel>();
+        public bool HasTriggers => Triggers?.Any() ?? false;
+
         public TableColumnModel GetColumn(string name)
             => Columns?.FirstOrDefault(c => c.Name == name) ?? throw new Exception("Column not found.");
         public TableColumnModel GetColumn(Identifier name)

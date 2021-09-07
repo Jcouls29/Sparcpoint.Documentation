@@ -10,6 +10,7 @@ namespace Sparcpoint.Documentation.Sql
             var fk = new ForeignKeyReference
             {
                 Name = constraint.ConstraintIdentifier,
+                Description = constraint.GetDescription(),
                 Fragment = constraint,
                 DeleteAction = constraint.DeleteAction,
                 UpdateAction = constraint.UpdateAction

@@ -12,7 +12,7 @@ namespace Sparcpoint.Documentation.Sql
             tree.Add(new SchemaModel
             {
                 Identifier = statement?.Name?.ToSqlIdentifier() ?? throw new Exception("Missing Schema Name"),
-                Description = string.Empty,
+                Description = statement.GetDescription(),
                 Fragment = statement,
                 CreateStatement = generator.Generate(statement),
             });

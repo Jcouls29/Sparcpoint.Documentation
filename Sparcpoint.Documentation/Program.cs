@@ -74,7 +74,8 @@ static async Task BuildSql(string template, bool noIndexPage, bool verbose, stri
         typeof(CreateTypeTableStatement),
         typeof(CreateSequenceStatement),
         typeof(CreateViewStatement),
-        typeof(CreateProcedureStatement)
+        typeof(CreateProcedureStatement),
+        typeof(CreateTriggerStatement)
     });
 
     IServiceProvider provider = BuildDependencyRoot(template, output);

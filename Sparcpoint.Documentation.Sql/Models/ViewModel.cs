@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sparcpoint.Documentation.Sql
 {
@@ -10,5 +12,8 @@ namespace Sparcpoint.Documentation.Sql
         }
 
         public SchemaModel Schema { get; set; }
+
+        public IList<TriggerModel> Triggers { get; set; } = new List<TriggerModel>();
+        public bool HasTriggers => Triggers?.Any() ?? false;
     }
 }

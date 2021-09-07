@@ -10,8 +10,8 @@
 
 ## Columns
 
-| Name | DataType | Nullable? | Default Value | Description |
-| ---- | -------- | --------- | ------------- | ----------- |
+| Name | DataType | Default Value | Description |
+| ---- | -------- | ------------- | ----------- |
 {{#Columns}}
-| {{Name}} | {{DataType}} | {{#IsNullable}}Y{{/IsNullable}} | {{DefaultValue}} | {{{Description}}}
+| {{Name}} | {{DataType}} {{#IsNullable}}<b>?</b>{{/IsNullable}} | {{DefaultValue}} | {{{Description}}}
 {{/Columns}}

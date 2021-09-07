@@ -6,6 +6,7 @@ namespace Sparcpoint.Documentation.Sql
     public class ForeignKeyReference
     {
         public SqlIdentifier Name { get; set; }
+        public string Description { get; set; }
 
         public TableModel TargetTable { get; set; }
         public ColumnList LocalColumns { get; set; }

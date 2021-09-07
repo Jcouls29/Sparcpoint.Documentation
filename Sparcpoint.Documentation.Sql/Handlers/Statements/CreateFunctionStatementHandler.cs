@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace Sparcpoint.Documentation.Sql
 {
-    public class CreateTableTypeStatementHandler : ISqlServerStatementHandler<CreateTypeTableStatement>
+    public class CreateFunctionStatementHandler : ISqlServerStatementHandler<CreateFunctionStatement>
     {
-        public async Task HandleAsync(CreateTypeTableStatement statement, ISqlTree tree, SqlScriptGenerator generator)
+        public async Task HandleAsync(CreateFunctionStatement statement, ISqlTree tree, SqlScriptGenerator generator)
         {
             if (statement?.Name?.SchemaIdentifier?.Value == null)
                 statement.Name.SchemaIdentifier.Value = "dbo";
@@ -13,18 +13,16 @@ namespace Sparcpoint.Documentation.Sql
             var identifier = statement.Name.ToSqlIdentifier();
             var schema = tree.Schemas[identifier.ToSchemaIdentifier()];
 
-            var tableType = new TableTypeModel(schema)
+            var view = new FunctionModel(schema)
             {
                 Identifier = identifier,
                 Description = statement.GetDescription(),
                 Fragment = statement,
-                CreateStatement = generator.Generate(statement),
+                CreateStatement = generator.Generate(statement)
             };
 
-            tableType.Columns = new ColumnList(statement.Definition.GetColumns(tableType, generator));
-
-            tree.Add(tableType);
-            schema.TableTypes.Add(tableType);
+            tree.Add(view);
+            schema.Functions.Add(view);
         }
     }
 }

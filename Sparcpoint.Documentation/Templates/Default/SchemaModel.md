@@ -13,7 +13,7 @@
 | Name | Description |
 | ---- | ----------- |
 {{#Tables}}
-| [{{Identifier}}](./{{Identifier}}.md) | {{{Description}}} |
+| [{{Identifier}}](./{{Identifier}}.md) | {{Description}} |
 {{/Tables}}
 {{/HasTables}}
 
@@ -52,3 +52,12 @@
 | [{{Identifier}}](./{{Identifier}}.md) | {{Description}} |
 {{/Sequences}}
 {{/HasSequences}}
+
+{{#HasFunctions}}
+## Functions
+| Name | Description |
+| ---- | ----------- |
+{{#Functions}}
+| [{{Identifier}}](./{{Identifier}}.md) | {{Description}} |
+{{/Functions}}
+{{/HasFunctions}}
