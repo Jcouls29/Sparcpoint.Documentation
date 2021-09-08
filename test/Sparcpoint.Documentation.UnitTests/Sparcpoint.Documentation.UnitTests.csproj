@@ -15,9 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sparcpoint.Documentation.Abstractions\Sparcpoint.Documentation.Abstractions.csproj" />
-    <ProjectReference Include="..\Sparcpoint.Documentation.Sql\Sparcpoint.Documentation.Sql.csproj" />
-    <ProjectReference Include="..\Sparcpoint.Documentation.Stubble\Sparcpoint.Documentation.Stubble.csproj" />
+    <ProjectReference Include="..\..\lib\Sparcpoint.Documentation.Abstractions\Sparcpoint.Documentation.Abstractions.csproj" />
+    <ProjectReference Include="..\..\lib\Sparcpoint.Documentation.Sql\Sparcpoint.Documentation.Sql.csproj" />
+    <ProjectReference Include="..\..\lib\Sparcpoint.Documentation.Stubble\Sparcpoint.Documentation.Stubble.csproj" />
   </ItemGroup>
 
 </Project>
