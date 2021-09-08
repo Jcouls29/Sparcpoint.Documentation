@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31612.314
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sparcpoint.Documentation", "src\Sparcpoint.Documentation\Sparcpoint.Documentation.csproj", "{028389C9-E284-48EB-8215-83655199E0AB}"
 EndProject
@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparcpoint.Documentation.BuildSql.Command", "lib\Sparcpoint.Documentation.BuildSql.Command\Sparcpoint.Documentation.BuildSql.Command.csproj", "{F6F4244A-E261-49B6-9FBA-FF17EE7FB37C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +78,14 @@ Global
 		{158D320B-0E6B-4E33-95A2-8B8B252F8AC9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{158D320B-0E6B-4E33-95A2-8B8B252F8AC9}.Release|x86.ActiveCfg = Release|Any CPU
 		{158D320B-0E6B-4E33-95A2-8B8B252F8AC9}.Release|x86.Build.0 = Release|Any CPU
+		{F6F4244A-E261-49B6-9FBA-FF17EE7FB37C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6F4244A-E261-49B6-9FBA-FF17EE7FB37C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6F4244A-E261-49B6-9FBA-FF17EE7FB37C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F6F4244A-E261-49B6-9FBA-FF17EE7FB37C}.Debug|x86.Build.0 = Debug|Any CPU
+		{F6F4244A-E261-49B6-9FBA-FF17EE7FB37C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6F4244A-E261-49B6-9FBA-FF17EE7FB37C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6F4244A-E261-49B6-9FBA-FF17EE7FB37C}.Release|x86.ActiveCfg = Release|Any CPU
+		{F6F4244A-E261-49B6-9FBA-FF17EE7FB37C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

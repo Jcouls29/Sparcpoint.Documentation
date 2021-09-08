@@ -15,6 +15,10 @@ namespace Sparcpoint.Documentation.Sql
         private readonly IFileStructureWriter _FileWriter;
         private readonly IOptionsMonitor<TreeRendererOptions> _Options;
 
+        public event EventHandler<FileSavedEventArgs> FileSaved;
+        protected void OnFileSaved(string path)
+            => FileSaved?.Invoke(this, new FileSavedEventArgs { FilePath = path });
+
         public DefaultTemplateSqlTreeRenderer(
             ITemplateLoader templateLoader, 
             ITemplateProcessor<string> templateProcessor, 
@@ -25,6 +29,8 @@ namespace Sparcpoint.Documentation.Sql
             _TemplateProcessor = templateProcessor ?? throw new ArgumentNullException(nameof(templateProcessor));
             _FileWriter = fileWriter ?? throw new ArgumentNullException(nameof(fileWriter));
             _Options = options ?? throw new ArgumentNullException(nameof(options));
+
+            _FileWriter.FileSaved += (sender, e) => OnFileSaved(e.FilePath);
         }
 
         public async Task RenderAsync(IReadOnlySqlTree tree)
@@ -58,6 +64,8 @@ namespace Sparcpoint.Documentation.Sql
                     Functions = tree.Functions,
                     DataTypes = tree.DataTypes,
                 });
+
+                
                 await _FileWriter.WriteAsync<Index>($"Index{template.FileExtension}", Encoding.UTF8.GetBytes(output));
             }
         }

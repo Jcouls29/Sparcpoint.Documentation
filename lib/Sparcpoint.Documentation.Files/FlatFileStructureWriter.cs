@@ -16,10 +16,15 @@ namespace Sparcpoint.Documentation.Files
             _RootDirectory = rootDirectory ?? throw new ArgumentNullException(nameof(rootDirectory));
         }
 
+        public event EventHandler<FileSavedEventArgs> FileSaved;
+        protected void OnFileSaved(string filePath)
+            => FileSaved?.Invoke(this, new FileSavedEventArgs { FilePath = filePath });
+
         public async Task WriteAsync<T>(string fileName, byte[] content)
         {
             string path = Path.Combine(_RootDirectory, fileName);
             await _Writer.WriteAsync(path, content);
+            OnFileSaved(path);
         }
     }
 }

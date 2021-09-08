@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
+    <PackageReference Include="Microsoft.SqlServer.DacFx" Version="160.5196.4-preview" />
+    <PackageReference Include="Scrutor" Version="3.3.0" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21308.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sparcpoint.Documentation.Abstractions\Sparcpoint.Documentation.Abstractions.csproj" />
+    <ProjectReference Include="..\Sparcpoint.Documentation.Files\Sparcpoint.Documentation.Files.csproj" />
+    <ProjectReference Include="..\Sparcpoint.Documentation.Sql\Sparcpoint.Documentation.Sql.csproj" />
+    <ProjectReference Include="..\Sparcpoint.Documentation.Stubble\Sparcpoint.Documentation.Stubble.csproj" />
+  </ItemGroup>
+
+</Project>
