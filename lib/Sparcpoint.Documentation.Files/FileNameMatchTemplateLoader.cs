@@ -16,21 +16,21 @@ namespace Sparcpoint.Documentation.Files
             _Loader = loaderFactory?.FromPath(path) ?? throw new ArgumentNullException(nameof(loaderFactory));
         }
 
-        public Task<Template?> LoadAsync<TInput>()
+        public Task<Template> LoadAsync<TInput>()
         {
             IEnumerable<string> files = _Loader.Load();
 
             string found = files.FirstOrDefault(f => string.Equals(Path.GetFileNameWithoutExtension(f), typeof(TInput).Name, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrWhiteSpace(found))
             {
-                return Task.FromResult((Template?)new Template
+                return Task.FromResult(new Template
                 {
                     Source = found,
                     Value = File.ReadAllText(found)
                 });
             }
 
-            return Task.FromResult((Template?)null);
+            return Task.FromResult((Template)null);
         }
     }
 }

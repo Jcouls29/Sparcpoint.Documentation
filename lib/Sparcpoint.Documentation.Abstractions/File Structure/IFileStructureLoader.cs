@@ -5,6 +5,6 @@ namespace Sparcpoint.Documentation.Abstractions
 {
     public interface IFileStructureLoader
     {
-        public IEnumerable<string> Load();
+        IEnumerable<string> Load();
     }
 }

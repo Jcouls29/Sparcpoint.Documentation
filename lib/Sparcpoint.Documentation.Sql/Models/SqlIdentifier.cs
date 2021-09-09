@@ -5,7 +5,7 @@ namespace Sparcpoint.Documentation.Sql
 {
     public struct SqlIdentifier : IEquatable<SqlIdentifier>
     {
-        public SqlIdentifier(string name, string? schema = null)
+        public SqlIdentifier(string name, string schema = null)
         {
             Schema = schema ?? "dbo";
             Name = name ?? throw new ArgumentNullException(nameof(name));

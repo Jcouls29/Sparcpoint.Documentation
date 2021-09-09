@@ -1,8 +1,10 @@
 ﻿using Sparcpoint.Documentation.BuildSql;
 using System;
+using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 public static class BuildSql
@@ -18,8 +20,25 @@ public static class BuildSql
             new Argument<string>("output", "Path to output directory"),
         };
 
-        buildCommand.Handler = CommandHandler.Create(async (BuildSqlCommandOptions options, IConsole console) =>
+        buildCommand.Handler = CommandHandler.Create(async (string template, bool noIndexPage, bool verbose, string path, string output, IConsole console) =>
         {
+            if (!Directory.Exists(path))
+                throw new Exception("Input path not found.");
+
+            var loaderFactory = new DefaultSqlFileStructureLoaderFactory();
+            var loader = loaderFactory.FromPath(path);
+
+            IEnumerable<string> input = loader.Load();
+
+            var options = new BuildSqlCommandOptions
+            {
+                Input = input.ToArray(),
+                NoIndexPage = noIndexPage,
+                Output = output,
+                Template = template,
+                Verbose = verbose
+            };
+
             var command = new BuildSqlCommand(options, console);
             await command.Run();
         });

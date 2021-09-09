@@ -8,7 +8,7 @@ namespace Sparcpoint.Documentation.Sql
         public SqlIdentifier Name { get; set; }
         public string Description { get; set; } = string.Empty;
 
-        public TableModel? TargetTable { get; set; } = null;
+        public TableModel TargetTable { get; set; } = null;
         public ColumnList LocalColumns { get; set; } = new ColumnList();
         public ColumnList ForeignColumns { get; set; } = new ColumnList();
 
@@ -32,7 +32,7 @@ namespace Sparcpoint.Documentation.Sql
         public DeleteUpdateAction DeleteAction { get; set; }
         public DeleteUpdateAction UpdateAction { get; set; }
 
-        public TSqlFragment? Fragment { get; set; }
+        public TSqlFragment Fragment { get; set; }
     }
 
     public class ForeignKeyColumnMap

@@ -30,8 +30,8 @@ namespace Sparcpoint.Documentation.BuildSql
             if (string.IsNullOrWhiteSpace(_Options.Template) || !Directory.Exists(_Options.Template))
                 throw new Exception("Template directory is required.");
 
-            if (string.IsNullOrWhiteSpace(_Options.Path) || !Directory.Exists(_Options.Template))
-                throw new Exception("Source directory is required.");
+            if (!_Options.Input?.Any() ?? true)
+                throw new Exception("At least 1 SQL file is required.");
 
             if (string.IsNullOrWhiteSpace(_Options.Output))
                 throw new Exception("Output directory is required.");
@@ -60,7 +60,7 @@ namespace Sparcpoint.Documentation.BuildSql
                 LogInformation($"Created directory '{_Options.Output}'");
             }
 
-            IEnumerable<string> files = sqlLoaderFactory.FromPath(_Options.Path).Load();
+            IEnumerable<string> files = _Options.Input;
             LogInformation($"Loaded {files.Count()} SQL Files.");
 
             if (files.Count() == 0)

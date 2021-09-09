@@ -4,6 +4,6 @@ namespace Sparcpoint.Documentation.Abstractions
 {
     public interface ITemplateLoader
     {
-        Task<Template?> LoadAsync<TInput>();
+        Task<Template> LoadAsync<TInput>();
     }
 }

@@ -25,7 +25,7 @@ namespace Sparcpoint.Documentation.Files
             if (_ExceptFolderNames?.Any() ?? false)
             {
                 allFiles = allFiles
-                    .Where(f => !_ExceptFolderNames.Any(folderName => f.Contains(@$"\{folderName}\")))
+                    .Where(f => !_ExceptFolderNames.Any(folderName => f.Contains($@"\{folderName}\")))
                     .ToArray();
             }
 

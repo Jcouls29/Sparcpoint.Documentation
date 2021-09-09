@@ -16,9 +16,9 @@ namespace Sparcpoint.Documentation.Sql
         public string DataType { get; set; } = string.Empty;
         public bool IsNullable { get; set; }
         public bool IsPrimaryKey { get; set; }
-        public string? DefaultValue { get; set; }
+        public string DefaultValue { get; set; }
 
-        public IdentityColumnModel? Identity { get; set; }
+        public IdentityColumnModel Identity { get; set; }
 
         public override string ToString()
             => Name;

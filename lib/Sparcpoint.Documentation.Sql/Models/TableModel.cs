@@ -25,7 +25,7 @@ namespace Sparcpoint.Documentation.Sql
         public IList<ForeignKeyReference> ForeignKeys { get; set; } = new List<ForeignKeyReference>();
         public bool HasForeignKeys => ForeignKeys?.Any() ?? false;
 
-        public PrimaryKeyConstraint? PrimaryKeyConstraint { get; set; }
+        public PrimaryKeyConstraint PrimaryKeyConstraint { get; set; }
 
         public IList<TriggerModel> Triggers { get; set; } = new List<TriggerModel>();
         public bool HasTriggers => Triggers?.Any() ?? false;

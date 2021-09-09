@@ -26,7 +26,7 @@ namespace Sparcpoint.Documentation.Sql
             return false;
         }
 
-        public static IdentityColumnModel? GetIdentity(this ColumnDefinition definition)
+        public static IdentityColumnModel GetIdentity(this ColumnDefinition definition)
         {
             if (definition.IdentityOptions == null)
                 return null;
@@ -50,7 +50,7 @@ namespace Sparcpoint.Documentation.Sql
             return script;
         }
 
-        public static SqlIdentifier ToSqlIdentifier(this Identifier name, Identifier? schema = null)
+        public static SqlIdentifier ToSqlIdentifier(this Identifier name, Identifier schema = null)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));

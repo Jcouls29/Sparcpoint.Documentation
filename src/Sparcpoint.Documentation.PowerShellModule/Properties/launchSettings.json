@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Sparcpoint.Documentation.PowerShellModule": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "commandLineArgs": "-NoLogo -NoExit -Command \"Import-Module '.\\Sparcpoint.Documentation.PowerShellModule.dll'; Get-ChildItem -Path 'C:\\Repos\\SparcPoint\\src\\products\\Sparcpoint.Inventory\\src\\Sparcpoint.Inventory.Database\\Definitions\\*.sql' -Recurse -Force | Publish-SqlDocumentation -Output c:\\Temp\\PSOutput\"",
+      "nativeDebugging": false
+    }
+  }
+}

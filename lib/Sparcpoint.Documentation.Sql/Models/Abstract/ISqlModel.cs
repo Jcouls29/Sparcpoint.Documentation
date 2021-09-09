@@ -7,8 +7,8 @@ namespace Sparcpoint.Documentation.Sql
     {
         SqlIdentifier Identifier { get; }
         string Description { get; }
-        TSqlFragment? Fragment { get; }
+        TSqlFragment Fragment { get; }
 
-        string? CreateStatement { get; }
+        string CreateStatement { get; }
     }
 }

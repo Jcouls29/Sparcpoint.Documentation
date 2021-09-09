@@ -23,7 +23,7 @@ namespace Sparcpoint.Documentation.Files
         public async Task WriteAsync<T>(string fileName, byte[] content)
         {
             string path = Path.Combine(_RootDirectory, fileName);
-            await _Writer.WriteAsync(path, content);
+            await _Writer.WriteAsync(path, content).ConfigureAwait(false);
             OnFileSaved(path);
         }
     }

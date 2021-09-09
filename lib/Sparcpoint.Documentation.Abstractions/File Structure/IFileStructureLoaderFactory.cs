@@ -2,6 +2,6 @@
 {
     public interface IFileStructureLoaderFactory<TMarker>
     {
-        public IFileStructureLoader FromPath(string path);
+        IFileStructureLoader FromPath(string path);
     }
 }
