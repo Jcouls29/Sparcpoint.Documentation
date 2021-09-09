@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
     <AssemblyName>Sparcpoint.Documentation.PowerShellModule</AssemblyName>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\package\bin</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,5 +56,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(ProjectDir)\*.psd1&quot; &quot;$(ProjectDir)\bin\package\&quot; /y&#xD;&#xA;xcopy &quot;$(ProjectDir)\*.psm1&quot; &quot;$(ProjectDir)\bin\package\&quot; /y" />
+  </Target>
 
 </Project>

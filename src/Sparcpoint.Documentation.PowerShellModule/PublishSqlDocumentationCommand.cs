@@ -32,14 +32,14 @@ namespace Sparcpoint.Documentation.PowerShellModule
 
         protected override void EndProcessing()
         {
-            string fullPath = Directory.GetCurrentDirectory();
+            string fullPath = string.Empty;
 
             if (string.IsNullOrWhiteSpace(TemplatePath))
-                fullPath = Path.Combine(fullPath, @".\Templates\Default");
+                fullPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @".\Templates\Default");
             else if (Path.IsPathRooted(TemplatePath))
                 fullPath = TemplatePath;
             else
-                fullPath = Path.Combine(fullPath, TemplatePath);
+                fullPath = Path.Combine(Directory.GetCurrentDirectory(), TemplatePath);
 
             if (!Directory.Exists(fullPath))
                 ThrowTerminatingError(new ErrorRecord(new Exception("Template directory does not exist."), "Not Exists", ErrorCategory.ObjectNotFound, TemplatePath));
